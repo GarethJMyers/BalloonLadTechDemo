@@ -1,3 +1,9 @@
+########### Manually generated:
+# Remove any modelling reference images I download because I won't own the copyright
+img_ref*.*
+
+########### Automatically generated:
+
 # This .gitignore file should be placed at the root of your Unity project directory
 #
 # Get latest from https://github.com/github/gitignore/blob/master/Unity.gitignore
