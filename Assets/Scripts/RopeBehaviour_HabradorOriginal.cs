@@ -2,21 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RopeBehaviour : MonoBehaviour
+public class RopeBehaviour_HabradorOriginal : MonoBehaviour
 {
-    //Public objects/vars
-    public Transform hangingFrom;
-    public Transform hangingTo;
-	public float ropeSectionLength = 0.5f;
-	public int numRopeSections = 14;
-	public float ropeWidth = 0.2f;
-	public float gravityAcc = 9.81f;
+    //Objects that will interact with the rope
+    public Transform whatTheRopeIsConnectedTo;
+    public Transform whatIsHangingFromTheRope;
 
     //Line renderer used to display the rope
     private LineRenderer lineRenderer;
 
     //A list with all rope section
     private List<RopeSection> allRopeSections = new List<RopeSection>();
+
+    //Rope data
+    private float ropeSectionLength = 0.5f;
 
     private void Start() 
 	{
@@ -25,9 +24,9 @@ public class RopeBehaviour : MonoBehaviour
 
 
         //Create the rope
-        Vector3 ropeSectionPos = hangingFrom.position;
+        Vector3 ropeSectionPos = whatTheRopeIsConnectedTo.position;
 
-        for (int i = 0; i < (numRopeSections + 1); i++)
+        for (int i = 0; i < 15; i++)
         {
             allRopeSections.Add(new RopeSection(ropeSectionPos));
 
@@ -41,10 +40,10 @@ public class RopeBehaviour : MonoBehaviour
         DisplayRope();
 
         //Move what is hanging from the rope to the end of the rope
-        hangingTo.position = allRopeSections[allRopeSections.Count - 1].pos;
+        whatIsHangingFromTheRope.position = allRopeSections[allRopeSections.Count - 1].pos;
 
         //Make what's hanging from the rope look at the next to last rope position to make it rotate with the rope
-        hangingTo.LookAt(allRopeSections[allRopeSections.Count - 2].pos);
+        whatIsHangingFromTheRope.LookAt(allRopeSections[allRopeSections.Count - 2].pos);
     }
 
     private void FixedUpdate()
@@ -54,7 +53,7 @@ public class RopeBehaviour : MonoBehaviour
 
     private void UpdateRopeSimulation()
     {
-        Vector3 gravityVec = new Vector3(0f, (-1.0f * gravityAcc), 0f);
+        Vector3 gravityVec = new Vector3(0f, -9.81f, 0f);
 
         float t = Time.fixedDeltaTime;
 
@@ -62,7 +61,7 @@ public class RopeBehaviour : MonoBehaviour
         //Move the first section to what the rope is hanging from
         RopeSection firstRopeSection = allRopeSections[0];
 
-        firstRopeSection.pos = hangingFrom.position;
+        firstRopeSection.pos = whatTheRopeIsConnectedTo.position;
 
         allRopeSections[0] = firstRopeSection;
 
@@ -155,6 +154,8 @@ public class RopeBehaviour : MonoBehaviour
     //Display the rope with a line renderer
     private void DisplayRope()
     {
+        float ropeWidth = 0.2f;
+
         lineRenderer.startWidth = ropeWidth;
         lineRenderer.endWidth = ropeWidth;
 
