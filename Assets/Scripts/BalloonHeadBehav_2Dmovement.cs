@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BalloonHeadBehav_BASIC : MonoBehaviour
+public class BalloonHeadBehav_2Dmovement : MonoBehaviour
 {
 	Rigidbody m_Rigidbody;
     Vector3 m_Movement;
