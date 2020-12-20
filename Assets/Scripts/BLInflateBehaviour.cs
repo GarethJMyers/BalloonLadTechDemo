@@ -35,12 +35,8 @@ public class BLInflateBehaviour : MonoBehaviour
 	
 	void FixedUpdate() {
 		//Debug.Log("Inflation amount: " + inflationAmount);
-		float inflationStepUnrounded = inflationAmount * movementRate;
-		float inflationStepRounded = FloatRound(inflationStepUnrounded, inflateDecimalPlaces);
-		Debug.Log("Inflation step: " + inflationStepRounded);
-		Debug.Log("Inflation amount: " + inflationAmount);
 		
-		m_Movement.Set(0f, inflationStepRounded, 0f);
+		m_Movement.Set(0f, inflationAmount * movementRate, 0f);
 		m_Movement.Normalize();
 		m_Rigidbody.MovePosition(m_Rigidbody.position + m_Movement);
 	}
@@ -64,15 +60,5 @@ public class BLInflateBehaviour : MonoBehaviour
 	public float GetInflation() {
 		// allows other scripts to read the inflation
 		return inflationAmount;
-	}
-	
-	float FloatRound(float toRound, int numDPs) {
-		// rounds a float to a given number of decimal places. Required as C#'s 
-		// Math.Round() only works on doubles.
-		float fNumDPs = (float)numDPs;
-		float multiplier = Mathf.Pow(10.0f, fNumDPs);
-		float multipliedVal = toRound * multiplier;
-		float roundedVal = Mathf.Round(multipliedVal);
-		return (roundedVal / multiplier);
 	}
 }
