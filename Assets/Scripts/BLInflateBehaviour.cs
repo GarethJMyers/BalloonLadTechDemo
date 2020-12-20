@@ -28,12 +28,12 @@ public class BLInflateBehaviour : MonoBehaviour
 	
 	void Update() {
 		// change inflation amount based on horizontal (left/right arrows) input
-		inputInflation = Input.GetAxis ("Horizontal");
+		inputInflation = Input.GetAxis("Horizontal");
 		ChangeInflation();
 	}
 	
 	void FixedUpdate() {
-		Debug.Log("Inflation amount: " + inflationAmount);
+		//Debug.Log("Inflation amount: " + inflationAmount);
 		
 		m_Movement.Set(0f, inflationAmount * movementRate, 0f);
 		m_Movement.Normalize();
@@ -54,5 +54,10 @@ public class BLInflateBehaviour : MonoBehaviour
 		if (inflationAmount > maxInflation) {
 			inflationAmount = maxInflation;
 		}
+	}
+	
+	public float GetInflation() {
+		// allows other scripts to read the inflation
+		return inflationAmount;
 	}
 }
